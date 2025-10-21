@@ -265,8 +265,8 @@ resource "aws_config_aggregate_authorization" "child" {
   # central_resource_collector_account
   count = local.enabled && var.central_resource_collector_account != null && var.is_organization_aggregator == false ? 1 : 0
 
-  account_id = var.central_resource_collector_account
-  region     = var.global_resource_collector_region
+  account_id            = var.central_resource_collector_account
+  authorized_aws_region = var.global_resource_collector_region
 
   tags = module.this.tags
 }
@@ -292,7 +292,7 @@ data "aws_caller_identity" "this" {}
 data "aws_partition" "current" {}
 
 locals {
-  enabled = module.this.enabled && !contains(var.disabled_aggregation_regions, data.aws_region.this.name)
+  enabled = module.this.enabled && !contains(var.disabled_aggregation_regions, data.aws_region.this.region)
 
   is_central_account                      = var.central_resource_collector_account == data.aws_caller_identity.this.account_id
   is_global_recorder_region               = var.global_resource_collector_region == data.aws_region.this.name
