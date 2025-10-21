@@ -278,8 +278,8 @@ resource "aws_config_aggregate_authorization" "central" {
   # Authorize each region to send its data to the global_resource_collector_region
   count = local.enabled && var.central_resource_collector_account == null && var.is_organization_aggregator == false ? 1 : 0
 
-  account_id = data.aws_caller_identity.this.account_id
-  region     = var.global_resource_collector_region
+  account_id            = data.aws_caller_identity.this.account_id
+  authorized_aws_region = var.global_resource_collector_region
 
   tags = module.this.tags
 }
