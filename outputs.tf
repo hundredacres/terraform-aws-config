@@ -38,3 +38,8 @@ output "sns_topic_subscriptions" {
   description = "SNS topic subscriptions"
   value       = local.create_sns_topic ? module.sns_topic[0].aws_sns_topic_subscriptions : null
 }
+
+output "sns_topic_arn" {
+  description = "SNS topic ARN"
+  value       = local.create_sns_topic ? module.sns_topic[0].sns_topic_arn : null
+}
